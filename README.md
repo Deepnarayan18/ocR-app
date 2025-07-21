@@ -52,4 +52,7 @@ Parsing depends on Gemini accuracy (may fail with poor images)
 
 No duplicate receipt detection
 
-Only supports basic currency detection (not conversion)
+Only supports basic currency detection (not conversion) 
+
+#Architecture# 
+<img width="739" height="937" alt="image" src="https://github.com/user-attachments/assets/e8b0fc89-3722-408e-b3ac-5779696376ba" />
