@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🧾 Receipt Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-3xl font-bold mb-4 text-blue-600 text-center">🧾 Receipt Details</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div><strong>Vendor:</strong> {{ receipt[1] or "N/A" }}</div>
+      <div><strong>Date:</strong> {{ receipt[2] or "N/A" }}</div>
+      <div><strong>Amount:</strong> {{ receipt[13] or "" }}{{ receipt[3] or "N/A" }}</div>
+      <div><strong>Category:</strong> {{ receipt[4] or "N/A" }}</div>
+      <div><strong>Bill Number:</strong> {{ receipt[5] or "N/A" }}</div>
+      <div><strong>Order ID:</strong> {{ receipt[6] or "N/A" }}</div>
+      <div><strong>Payment Method:</strong> {{ receipt[7] or "N/A" }}</div>
+      <div><strong>Payment Status:</strong> {{ receipt[8] or "N/A" }}</div>
+      <div><strong>Tax:</strong> {{ receipt[13] or "" }}{{ receipt[9] or 0 }}</div>
+      <div><strong>Discount:</strong> {{ receipt[13] or "" }}{{ receipt[10] or 0 }}</div>
+      <div><strong>Service Charge:</strong> {{ receipt[13] or "" }}{{ receipt[11] or 0 }}</div>
+      <div><strong>Tip:</strong> {{ receipt[13] or "" }}{{ receipt[12] or 0 }}</div>
+      <div><strong>Currency:</strong> {{ receipt[13] or "N/A" }}</div>
+      <div><strong>Customer Name:</strong> {{ receipt[14] or "N/A" }}</div>
+      <div><strong>Email:</strong> {{ receipt[15] or "N/A" }}</div>
+      <div><strong>Phone:</strong> {{ receipt[16] or "N/A" }}</div>
+      <div><strong>Remarks:</strong> {{ receipt[17] or "N/A" }}</div>
+      <div><strong>Location:</strong> {{ receipt[18] or "N/A" }}</div>
+      <div class="md:col-span-2"><strong>Billing Address:</strong> {{ receipt[19] or "N/A" }}</div>
+      <div class="md:col-span-2"><strong>Shipping Address:</strong> {{ receipt[20] or "N/A" }}</div>
+    </div>
+
+    {% if items %}
+    <div class="mt-8">
+      <h2 class="text-xl font-semibold mb-2">📦 Items</h2>
+      <table class="min-w-full text-sm border">
+        <thead class="bg-gray-200 text-gray-700">
+          <tr>
+            <th class="py-2 px-3">Name</th>
+            <th class="py-2 px-3">Quantity</th>
+            <th class="py-2 px-3">Unit</th>
+            <th class="py-2 px-3">Price</th>
+            <th class="py-2 px-3">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr class="border-t">
+            <td class="py-2 px-3">{{ item[0] or "N/A" }}</td>
+            <td class="py-2 px-3">{{ item[1] or "N/A" }}</td>
+            <td class="py-2 px-3">{{ item[2] or "N/A" }}</td>
+            <td class="py-2 px-3">{{ receipt[13] or "" }}{{ item[3] or "N/A" }}</td>
+            <td class="py-2 px-3">{{ receipt[13] or "" }}{{ item[4] or "N/A" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    <div class="mt-8 bg-gray-50 p-4 rounded">
+      <h2 class="text-xl font-semibold mb-2 text-center">📈 Receipt Statistics</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        <div><strong>Total</strong><br>{{ receipt[13] or "" }}{{ stats.total }}</div>
+        <div><strong>Mean</strong><br>{{ receipt[13] or "" }}{{ stats.mean }}</div>
+        <div><strong>Median</strong><br>{{ receipt[13] or "" }}{{ stats.median }}</div>
+        <div><strong>Mode</strong><br>{{ stats.mode }}</div>
+      </div>
+    </div>
+
+    <div class="mt-10">
+      <h2 class="text-xl font-semibold mb-2 text-center text-purple-600">📊 Vendor Spending Distribution</h2>
+      {{ pie_chart | safe }}
+    </div>
+
+    <h2 class="text-xl font-semibold mt-8 text-center text-blue-600">📊 Date vs Amount</h2>
+    <div class="mt-4">
+      {{ bar_chart | safe }}
+    </div>
+  </div>
+
+</body>
+</html>
